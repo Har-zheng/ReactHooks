@@ -1,7 +1,7 @@
 import React, { createContext, Component, PureComponent,memo } from 'react';
 import logo from './logo.svg';
 import './App.css';
-
+/* memo  阻止组件的重渲染 */
 /*
 
 class Foo extends PureComponent {
