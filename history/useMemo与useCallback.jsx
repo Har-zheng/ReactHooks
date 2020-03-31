@@ -5,7 +5,6 @@ import './App.css';
 const CountContext = createContext();
 
 
-
  const Counter = memo(function Counter(props) {
    console.log('Counter memo')
   return (
@@ -13,15 +12,13 @@ const CountContext = createContext();
   )
 })
 
-
-
 function App(props) {
 
   const [count, setCount] = useState(0);
   const [clickCount, setClickCount] = useState(0);
   const double = useMemo(() => {
     return count * 2
-  }, [count])
+  }, [count])     
  
   // const onClick = () => {
   //   console.log('Click')
