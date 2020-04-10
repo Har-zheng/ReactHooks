@@ -1,88 +1,59 @@
 import React, { Component, useState, PureComponent, useMemo, createContext, useEffect, useContext, memo, useCallback, useRef } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import './App.css'
 
-// const CountContext = createContext();
-
-
-
-//  const Counter = memo(function Counter(props) {
-//    console.log('Counter memo')
-//   return (
-//     <h1 onClick={props.onClick}>{props.count}</h1>
-//   )
-// })
-
-function useCounter(count) {
-  const size = useSize()
-  return (
-  <h1 >{count} width{size.width} height:{size.height}</h1>
-  )
-
-}
-
-function useCount(defaultCount) {
-  const [count, setCount] = useState(defaultCount);
-  const it = useRef()
-  useEffect(() => {
-    it.current = setInterval(() => {
-      setCount(count => count + 1)
-    }, 1000);
-  }, [])
-  useEffect(() => {
-    if (count >= 10) {
-      clearInterval(it.current)
+let idSeq = Date.now()
+function Control(props) {
+  const { addTodo } = props
+  const inputRef = useRef()
+  const onSubmit = (e) => {
+    e.preventDefault();
+    const newText = inputRef.current.value.trim()
+    if (newText.length === 0) {
+      return;
     }
-  })
-  return [count, setCount]
-}
-
-
-function useSize() {
-  const [size, setSize] = useState({
-    width: document.documentElement.clientWidth,
-    height: document.documentElement.clientHeight
-  })
-  const onResize = useCallback(() => {
-    setSize({
-      width: document.documentElement.clientWidth,
-      height: document.documentElement.clientHeight
+    addTodo({
+      id: ++idSeq,
+      text: newText,
+      complete: false
     })
+    inputRef.current.value = ''
+  }
+  return <div className="control">
+    <h1>todos</h1>
+    <form onSubmit={onSubmit}>
+      <input ref={inputRef} type="text" className="new-todo" placeholder="what needs to be dome?"  />
+    </form>
+  </div>
+}
+function Todos() {
+  return <div></div>
+}
+
+function TodoList() {
+  const [todos, setTodos] = useState([])
+  const addTodo = useCallback((todo) => {
+    setTodos(todos => [...todos, todo])
   }, [])
-  useEffect(() => {
-    window.addEventListener('resize', onResize, false)
-    return () => {
-      window.removeEventListener('resize', onResize, false)
-    }
-  }, [onResize])
-  return size
-}
-
-
-function App(props) {
-  const [count, setCount] = useCount(0)
-  const Counter = useCounter(count);
-  const size = useSize();
-  /**
-   * Memo  决定一个组件是否重新执行
-   */
-  //  useMemo  决定 一段函数 逻辑是否重新执行   当依赖数组变化时 useMemo一定执行 (反之未必)
-  /**
-   * 如果useMemo  返回值是函数  可以简写成 useCallback的形式
-   */
-  return (
-    <div>
-      <button type="button" onClick={() => { setCount(count + 1) }}>
-        click({count})   </button>
-        <h1>width {size.width}height:{size.height}</h1>
-       
-      {
-        Counter
-      }
-    </div>
+  const removeTodo = useCallback((id) => {
+    setTodos(todos => todos.filter(todo => {
+      return todo.id !== id
+    }))
+  }, []
   )
-
+  const toggleTodo = useCallback((id) => {
+    setTodos(todos => todos.map(todo => {
+      return todo.id === id ?
+        {
+          ...todo,
+          complete: !todo.complete
+        }
+        : todo
+    }))
+  }, [])
+  return <div className="todo-list">
+    <Control addTodo={addTodo}></Control>
+    <Todos removeTodo={removeTodo} toggleTodo={toggleTodo} todos={todos}></Todos>
+  </div>
 }
 
-// useEffect  包含的生命周期
-export default App;
+export default TodoList;
