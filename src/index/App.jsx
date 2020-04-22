@@ -10,14 +10,20 @@ import Journey from "./Journey";
 import Submit from "./Submit";
 import CitySelector from "../common/CitySelector";
 
-import { exchangeFromTo, showCitySelector } from "./actions";
+import {
+  exchangeFromTo,
+  showCitySelector,
+  hideCitySelector,
+  fetchCityData,
+  setSelectedCity
+} from "./actions";
 
 function App(props) {
   const {
     from,
     to,
     dispatch,
-    isCitySelectVisible,
+    isCitySelectorVisible,
     cityData,
     isLoadingCityData
   } = props;
@@ -29,6 +35,17 @@ function App(props) {
   }, []);
   const doShowCitySelector = useCallback(m => {
     dispatch(showCitySelector(m));
+  }, []);
+
+  const citySelectorCbs = useMemo(() => {
+    return bindActionCreators(
+      {
+        onBack: hideCitySelector,
+        fetchCityData,
+        onSelect: setSelectedCity
+      },
+      dispatch
+    );
   }, []);
   const cbs = useMemo(() => {
     return bindActionCreators(
@@ -51,13 +68,15 @@ function App(props) {
               <Submit />
           </form>
           <CitySelector
-        show={isCitySelectVisible}
+        show={isCitySelectorVisible}
         cityData={cityData}
         isLoading={isLoadingCityData}
+        {...citySelectorCbs}
       />
       </div>
   );
 }
+
 export default connect(
   function mapStateToProps(state) {
     return state;

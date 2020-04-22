@@ -74,10 +74,11 @@ export function setSelectedCity(city) {
     const { currentSelectingLeftCity } = getState();
 
     if (currentSelectingLeftCity) {
-      dispatch(setFrom());
+      dispatch(setFrom(city));
     } else {
       dispatch(setTo(city));
     }
+    dispatch(hideCitySelector());
   };
 }
 
@@ -94,6 +95,7 @@ export function hideDateSelector() {
     payload: false
   };
 }
+
 export function exchangeFromTo() {
   return (dispatch, getState) => {
     const { from, to } = getState();
@@ -101,9 +103,44 @@ export function exchangeFromTo() {
     dispatch(setTo(from));
   };
 }
+
 export function setDepartDate(departDate) {
   return {
     type: ACTION_SET_DEPART_DATE,
     payload: departDate
+  };
+}
+
+export function fetchCityData() {
+  return (dispatch, getState) => {
+    const { isLoadingCityData } = getState();
+    if (isLoadingCityData) {
+      return;
+    }
+    const cache = JSON.parse(localStorage.getItem("city_data_cache") || "{}");
+    if (Date.now() < cache.expires) {
+      dispatch(setCityData(cache.data));
+      return;
+    }
+    dispatch(setIsLoadingCityData(true));
+    fetch("/rest/cities?" + Date.now())
+      .then(res => res.json())
+      .then(cityData => {
+        dispatch(setCityData(cityData));
+        localStorage.setItem(
+          "city_data_cache",
+          JSON.stringify({
+            expires: Date.now() + 60 * 1000,
+            data: cityData
+          })
+        );
+        dispatch(setIsLoadingCityData(false));
+      })
+
+      .catch(err => {
+        // eslint-disable-next-line no-console
+        console.log(err);
+        dispatch(setIsLoadingCityData(false));
+      });
   };
 }
