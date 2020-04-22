@@ -12,7 +12,7 @@ const CityItem = memo(function(props) {
   );
 });
 
-CityItem.ProtoTypes = {
+CityItem.protoTypes = {
   name: PropTypes.string.isRequired,
   onSelect: PropTypes.string.isRequired
 };
@@ -33,7 +33,7 @@ const CitySection = memo(function(props) {
   );
 });
 
-CitySection.ProtoTypes = {
+CitySection.protoTypes = {
   title: PropTypes.string.isRequired,
   cities: PropTypes.array.isRequired,
   onSelect: PropTypes.func.isRequired
@@ -46,7 +46,7 @@ const AlphaIndex = memo(function(props) {
       </i>
   );
 });
-AlphaIndex.ProtoTypes = {
+AlphaIndex.protoTypes = {
   alpha: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired
 };
@@ -79,7 +79,7 @@ const CityList = memo(function(props) {
   );
 });
 
-CityList.ProtoTypes = {
+CityList.protoTypes = {
   sections: PropTypes.object.isRequired,
   onSelect: PropTypes.func.isRequired
 };
@@ -92,7 +92,7 @@ const SuggestItem = memo(function(props) {
       </li>
   );
 });
-SuggestItem.ProtoTypes = {
+SuggestItem.protoTypes = {
   name: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired
 };
@@ -137,7 +137,7 @@ const Suggest = memo(function(props) {
       </div>
   );
 });
-Suggest.ProtoTypes = {
+Suggest.protoTypes = {
   seachKey: PropTypes.string.isRequired,
   onSelect: PropTypes.func.isRequired
 };
@@ -208,7 +208,7 @@ const CitySelector = memo(function(props) {
       </div>
   );
 });
-CitySelector.ProtoTypes = {
+CitySelector.protoTypes = {
   show: PropTypes.object.isRequired,
   cityData: PropTypes.object,
   isLoading: PropTypes.object.isRequired,
