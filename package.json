@@ -81,7 +81,22 @@
       ]
     }
   },
-  "proxy": "http://localhost:5000",
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+    "lint-staged": {
+      "*.{js,jsx}": [
+        "prettier --write",
+        "eslint --fix",
+        "git add"
+      ],
+      "*.{css,md}": [
+        "prettier --write",
+        "git add"
+      ]
+    },
   "browserslist": [
     ">0.2%",
     "not dead",
@@ -139,6 +154,7 @@
     ]
   },
   "devDependencies": {
+    "husky": "^2.4.1",
     "lint-staged": "^8.2.1",
     "prettier": "^1.18.2",
     "webpack-bundle-analyzer": "^3.3.2"
