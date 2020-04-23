@@ -9,13 +9,16 @@ import HighSpeed from "./HighSpeed";
 import Journey from "./Journey";
 import Submit from "./Submit";
 import CitySelector from "../common/CitySelector";
+import DateSelector from "../common/DateSelector";
 
 import {
   exchangeFromTo,
   showCitySelector,
   hideCitySelector,
   fetchCityData,
-  setSelectedCity
+  setSelectedCity,
+  showDateSelector,
+  hideDateSelector
 } from "./actions";
 
 function App(props) {
@@ -25,7 +28,9 @@ function App(props) {
     dispatch,
     isCitySelectorVisible,
     cityData,
-    isLoadingCityData
+    isLoadingCityData,
+    departDate,
+    isDateSelectorVisible
   } = props;
   const onBack = useCallback(() => {
     window.history.back();
@@ -47,6 +52,24 @@ function App(props) {
       dispatch
     );
   }, []);
+  const departDateCbs = useMemo(() => {
+    return bindActionCreators(
+      {
+        onClick: showDateSelector
+      },
+      dispatch
+    );
+  }, []);
+  const dateSelectorCbs = useMemo(
+    () =>
+      bindActionCreators(
+        {
+          onBack: hideDateSelector
+        },
+        dispatch
+      ),
+    []
+  );
   const cbs = useMemo(() => {
     return bindActionCreators(
       {
@@ -63,7 +86,7 @@ function App(props) {
           </div>
           <form className="form">
               <Journey from={from} to={to} {...cbs} />
-              <DeparDate />
+              <DeparDate time={departDate} {...departDateCbs} />
               <HighSpeed />
               <Submit />
           </form>
@@ -73,6 +96,7 @@ function App(props) {
         isLoading={isLoadingCityData}
         {...citySelectorCbs}
       />
+          <DateSelector show={isDateSelectorVisible} {...dateSelectorCbs} />
       </div>
   );
 }
