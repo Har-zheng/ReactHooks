@@ -3,7 +3,18 @@ import "./DateSelector.css";
 import PropTypes from "prop-types";
 import classNames from "classnames";
 import Header from "./Header";
-
+function Day(props) {
+  const { day, onSelect } = props;
+  return <td></td>;
+}
+function Week(props) {
+  const { days, onSelect } = props;
+  return <div></div>;
+}
+Week.propTypes = {
+  days: PropTypes.array.isRequired,
+  onSelect: PropTypes.func.isRequired
+};
 function Month(props) {
   const { startingTimeInMonth, onSelect } = props;
   const startDay = new Date(startingTimeInMonth);
@@ -47,6 +58,9 @@ function Month(props) {
                   <th className="weekend">周六</th>
                   <th className="weekend">周日</th>
               </tr>
+              {weeks.map((week, idx) => {
+          return <Week key={idx} days={week} onSelect={onSelect} />;
+        })}
           </tbody>
       </table>
   );
