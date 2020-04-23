@@ -3,36 +3,78 @@ import "./DateSelector.css";
 import PropTypes from "prop-types";
 import classNames from "classnames";
 import Header from "./Header";
+
+import { h0 } from "./fp";
+
 function Day(props) {
   const { day, onSelect } = props;
-  return <td></td>;
+  if (!day) {
+    return <td className="null"></td>;
+  }
+  const classes = [];
+  const now = h0;
+  // eslint-disable-next-line no-console
+  console.log(day < now);
+  if (day < now()) {
+    classes.push("disabled");
+  }
+  if ([6, 0].includes(new Date(day).getDay())) {
+    classes.push("weekend");
+  }
+
+  const dateString = now === day ? "今天" : new Date(day).getDate();
+  return (
+      <td className={classNames(classes)} onClick={() => onSelect(day)}>
+          {dateString}
+      </td>
+  );
 }
+Day.propTypes = {
+  day: PropTypes.number,
+  onSelect: PropTypes.func.isRequired
+};
+
 function Week(props) {
   const { days, onSelect } = props;
-  return <div></div>;
+
+  return (
+      <tr className="date-table-days">
+          {days.map((day, idx) => {
+        return <Day day={day} onSelect={onSelect} key={idx} />;
+      })}
+      </tr>
+  );
 }
+
 Week.propTypes = {
   days: PropTypes.array.isRequired,
   onSelect: PropTypes.func.isRequired
 };
+
 function Month(props) {
   const { startingTimeInMonth, onSelect } = props;
+
   const startDay = new Date(startingTimeInMonth);
   const currentDay = new Date(startingTimeInMonth);
   let days = [];
-  while (currentDay.getMonth() === startingTimeInMonth) {
+
+  while (currentDay.getMonth() === startDay.getMonth()) {
     days.push(currentDay.getTime());
     currentDay.setDate(currentDay.getDate() + 1);
   }
-  days = new Array(startDay.getDate() ? startDay.getDay() - 1 : 6)
+
+  days = new Array(startDay.getDay() ? startDay.getDay() - 1 : 6)
     .fill(null)
     .concat(days);
-  const lastDate = new Date(days[days.length - 1]);
+
+  const lastDay = new Date(days[days.length - 1]);
+
   days = days.concat(
-    new Array(lastDate.getDay() ? 7 - lastDate.getDay() : 0).fill(null)
+    new Array(lastDay.getDay() ? 7 - lastDay.getDay() : 0).fill(null)
   );
 
   const weeks = [];
+
   for (let row = 0; row < days.length / 7; ++row) {
     const week = days.slice(row * 7, (row + 1) * 7);
     weeks.push(week);
@@ -65,6 +107,7 @@ function Month(props) {
       </table>
   );
 }
+
 Month.propTypes = {
   startingTimeInMonth: PropTypes.number.isRequired,
   onSelect: PropTypes.func.isRequired
@@ -107,6 +150,6 @@ export default function DateSelector(props) {
 }
 DateSelector.propTypes = {
   show: PropTypes.bool.isRequired,
-  onClick: PropTypes.func.isRequired,
+  onSelect: PropTypes.func.isRequired,
   onBack: PropTypes.func.isRequired
 };
