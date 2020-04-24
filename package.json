@@ -66,8 +66,7 @@
   "scripts": {
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
-    "test": "node scripts/test.js",
-    "format": "prettier src/**/*.{js,jsx,css,md} --write && eslint src/**/*.{jsx,js} --fix"
+    "test": "node scripts/test.js"
   },
   "eslintConfig": {
     "extends": [
@@ -81,22 +80,8 @@
       ]
     }
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
-    "lint-staged": {
-      "*.{js,jsx}": [
-        "prettier --write",
-        "eslint --fix",
-        "git add"
-      ],
-      "*.{css,md}": [
-        "prettier --write",
-        "git add"
-      ]
-    },
+
+
   "browserslist": [
     ">0.2%",
     "not dead",

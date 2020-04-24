@@ -1,10 +1,8 @@
-import React from 'react'
-import './Nav.css'
-import PropTypes from 'prop-types'
+// import React from "react";
+import "./Nav.css";
+// import PropTypes from "prop-types";
 
 export default function Nav(props) {
-    return null;
+  return null;
 }
-Nav.propTypes =  {
-
-}
+Nav.propTypes = {};
