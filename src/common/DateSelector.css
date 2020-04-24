@@ -52,6 +52,7 @@
   border-left: 1px solid #ccc;
   border-right: 1px solid #ccc;
   border-bottom: 1px solid #cacaca;
+  line-height: 23px;
 }
 
 .date-table-weeks th {
@@ -75,6 +76,7 @@
   margin: 0 2px 2px 0;
   height: 40px;
   width: 40px;
+  line-height: 40px;
 }
 
 .date-table-days td.null {
