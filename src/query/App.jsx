@@ -1,9 +1,9 @@
-// import React from "react";
+import React from "react";
 import { connect } from "react-redux";
 import Nav from "../common/Nav";
 import List from "./List";
 import Bottom from "./Bottom";
-import { ACTION_SET_FROM } from "./actions";
+// import { ACTION_SET_FROM } from "./actions";
 
 import "./App.css";
 
@@ -16,11 +16,12 @@ function App(props) {
       </div>
   );
 }
+
 export default connect(
   function mapStateToProps(state) {
-      return state
+    return state;
   },
   function mapDispatchToProps(dispatch) {
-      return { dispatch }
+    return { dispatch };
   }
 )(App);

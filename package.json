@@ -80,8 +80,22 @@
       ]
     }
   },
-
-
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+    "lint-staged": {
+      "*.{js,jsx}": [
+        "prettier --write",
+        "eslint --fix",
+        "git add"
+      ],
+      "*.{css,md}": [
+        "prettier --write",
+        "git add"
+      ]
+    },
   "browserslist": [
     ">0.2%",
     "not dead",
