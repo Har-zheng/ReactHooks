@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect, useMemo } from "react";
 import { connect } from "react-redux";
 import URI from "urijs";
 import Header from "../common/Header";
@@ -6,6 +6,7 @@ import Nav from "../common/Nav";
 import List from "./List";
 import Bottom from "./Bottom";
 import useNav from "../common/useNav";
+import { bindActionCreators } from "redux";
 
 // import { ACTION_SET_FROM } from "./actions";
 
@@ -22,7 +23,11 @@ import {
   setDepartStations,
   setArriveStations,
   prevDate,
-  nextDate
+  nextDate,
+  toggleOrderType,
+  toggleHighSpeed,
+  toggleOnlyTickets,
+  toggleIsFiltersVisible
 } from "./actions";
 import dayjs from "dayjs";
 import { h0 } from "../common/fp";
@@ -38,6 +43,7 @@ function App(props) {
     searchParsed,
     orderType,
     onlyTickets,
+    isFiltersVisible,
     checkedTicketTypes,
     checkedTrainTypes,
     checkedDepartStations,
@@ -129,6 +135,18 @@ function App(props) {
     nextDate
   );
 
+  const bottomCbs = useMemo(() => {
+    return bindActionCreators(
+      {
+        toggleOrderType,
+        toggleHighSpeed,
+        toggleOnlyTickets,
+        toggleIsFiltersVisible
+      },
+      dispatch
+    );
+  }, []);
+
   if (!searchParsed) {
     return null;
   }
@@ -145,7 +163,13 @@ function App(props) {
           next={next}
         />
               <List list={trainList} />
-              <Bottom />
+              <Bottom
+          highSpeed={highSpeed}
+          orderType={orderType}
+          onlyTickets={onlyTickets}
+          isFiltersVisible={isFiltersVisible}
+          {...bottomCbs}
+        />
           </div>
       </div>
   );

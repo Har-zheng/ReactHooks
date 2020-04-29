@@ -66,10 +66,10 @@ export function setTrainList(trainList) {
   };
 }
 
-export function toggletOrderType(orderType) {
+export function toggleOrderType() {
   return (dispatch, getState) => {
-    const { ordeeType } = getState();
-    if (ordeeType === ORDER_DEPART) {
+    const { orderType } = getState();
+    if (orderType === ORDER_DEPART) {
       dispatch({
         type: ACTION_SET_ORDER_TYPE,
         payload: ORDER_DURATION
@@ -80,10 +80,6 @@ export function toggletOrderType(orderType) {
         payload: ORDER_DEPART
       });
     }
-  };
-  return {
-    type: ACTION_SET_ORDER_TYPE,
-    payload: orderType
   };
 }
 
@@ -141,6 +137,17 @@ export function setArriveStations(arriveStations) {
   return {
     type: ACTION_SET_ARRIVE_STATIONS,
     payload: arriveStations
+  };
+}
+
+export function toggleIsFiltersVisible() {
+  return (dispatch, getState) => {
+    const { isFiltersVisible } = getState();
+
+    dispatch({
+      type: ACTION_SET_IS_FILTERS_VISIBLE,
+      payload: !isFiltersVisible
+    });
   };
 }
 
