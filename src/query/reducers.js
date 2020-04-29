@@ -151,7 +151,7 @@ export default {
     }
     return state;
   },
-  checkedDepartStations(state = {}, action) {
+  checkedDepartStations(state = [], action) {
     const { type, payload } = action;
     switch (type) {
       case ACTION_SET_CHECKED_DEPART_STATIONS:
