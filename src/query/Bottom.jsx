@@ -109,6 +109,12 @@ const BottomModal = memo(props => {
       };
     }
   );
+  const [localDepartTimeStart, setLocalTimeStart] = useState(departTimeStart);
+  const [localDepartTimeEnd, setLocalTimeEnd] = useState(departTimeEnd);
+  const [localArriveTimeStart, setLocalArriveTimeStart] = useState(
+    arriveTimeStart
+  );
+  const [localArriveTimeEnd, setLocalArriveTimeEnd] = useState(arriveTimeEnd);
   const optinGroup = [
     {
       title: "坐席类型",

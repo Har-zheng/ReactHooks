@@ -174,7 +174,6 @@ function App(props) {
       <div>
           <div className="header-wrapper">
               <Header title={`${from} ⇀ ${to}`} onBack={onBack} />
-
               <Nav
           date={departDate}
           isPrevDisabled={isPrevDisabled}
