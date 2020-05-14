@@ -2,6 +2,7 @@ import React, { memo, useState, useCallback } from "react";
 import PropTypes from "prop-types";
 import { ORDER_DEPART } from "./constant";
 import classnames from "classnames";
+import Slider from "./Slider";
 import "./Bottom.css";
 
 const Filter = memo(props => {
@@ -154,6 +155,20 @@ const BottomModal = memo(props => {
                           <Option {...group} key={group.title} />
             ))}
                   </div>
+                  <Slider
+            title="出发时间"
+            currentStartHours={localArriveTimeStart}
+            currentEndHours={localArriveTimeEnd}
+            onStartChanged={setLocalArriveTimeStart}
+            onEndChanged={setLocalArriveTimeEnd}
+          />
+                  <Slider
+            title="出发时间"
+            currentStartHours={localArriveTimeStart}
+            currentEndHours={localArriveTimeEnd}
+            onStartChanged={setLocalArriveTimeStart}
+            onEndChanged={setLocalArriveTimeEnd}
+          />
               </div>
           </div>
       </div>
