@@ -53,11 +53,17 @@ export default {
   },
   highSpeed(state = false, action) {
     const { type, payload } = action;
+    let checkedTrainTypes;
+
     switch (type) {
       case ACTION_SET_HIGH_SPEED:
         return payload;
+      case ACTION_SET_CHECKED_TRAIN_TYPES:
+        checkedTrainTypes = payload;
+        return Boolean(checkedTrainTypes[1] && checkedTrainTypes[5]);
       default:
     }
+
     return state;
   },
   trainList(state = [], action) {
