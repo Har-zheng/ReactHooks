@@ -9,7 +9,7 @@ import Header from "../common/Header.jsx";
 import Nav from "../common/Nav.jsx";
 import Detail from "../common/Detail.jsx";
 import Candidate from "./Candidate.jsx";
-import { TrainContext } from "./context.jsx";
+import { TrainContext } from "./context";
 //import Schedule from './Schedule.jsx';
 import "./App.css";
 
